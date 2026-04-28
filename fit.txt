@@ -1,0 +1,40 @@
+blocks = [100,500,200,300,400,600]
+psize=212
+
+def first_fit(blocks,psize):
+    for i in range(len(blocks)):
+        if blocks[i] >= psize:
+            print("first fit :",blocks[i],"is allocated")
+            return
+    print("no block is allocated")
+
+first_fit(blocks,psize)
+
+def best_fit(blocks,psize):
+    best_index=-1
+    for i in range(len(blocks)):
+        if blocks[i] >= psize:
+            if best_index == -1 or blocks[i] < blocks[best_index]:
+                best_index = i
+
+    if best_index != 1:
+        print("best fit ",blocks[best_index],"is allocated")
+    else:
+        print("No block is allocated")
+
+best_fit(blocks,psize)
+
+def worst_fit(blocks,psize):
+    worst_index=-1
+
+    for i in range(len(blocks)):
+        if blocks[i] >= psize:
+            if worst_index == -1 or blocks[i] > blocks[worst_index]:
+                worst_index=i
+
+    if worst_index != -1:
+        print("Worst Index:", blocks[worst_index],"is allocated")
+    else:
+        print("no fit")
+
+worst_fit(blocks,psize)

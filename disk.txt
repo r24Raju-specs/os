@@ -1,0 +1,147 @@
+requests = [82,170,43,140,24,16,190]
+head=50
+disk_size=200
+
+def fcfs(requests,head):
+    total_seek=0
+    sequence= [head]
+
+    for r in requests:
+        total_seek += abs(r-head)
+        head = r
+        sequence.append(r)
+
+    print("FCFS order : ","->".join(map(str,sequence)))
+    print("total Seek time = ",total_seek)
+
+fcfs(requests,head)
+
+def sstf(requests,head):
+    req= requests.copy()
+    total_seek=0
+    sequence = [head]
+
+    while req:
+        nearest = min(req, key=lambda x: abs(x-head))
+
+        total_seek += abs(nearest - head)
+        head = nearest
+        sequence.append(nearest)
+        req.remove(nearest)
+
+    print("SSTF order:","->".join(map(str, sequence)))
+    print("Total Seek time:", total_seek)
+
+sstf(requests,head)
+
+def scan(requests, head):
+    total_seek = 0
+    sequence = [head]
+
+    left = sorted([r for r in requests if r < head])
+    right = sorted([ r for r in requests if r >= head])
+
+    for r in right:
+        total_seek += abs(r - head)
+        head = r
+        sequence.append(r)
+
+    if head != disk_size-1:
+        total_seek += abs((disk_size - 1 ) -head)
+        head = disk_size-1
+        sequence.append(head)
+
+    for r in reversed(left):
+        total_seek += abs(r - head)
+        head=r
+        sequence.append(r)
+
+    print("SCAN order: ","->".join(map(str, sequence)))
+    print("Total Seek time:",total_seek)
+
+scan(requests,head)
+
+
+def cscan(requests,head,disk_size):
+    total_seek =0
+    sequence =[head]
+
+    left = sorted([r for r in requests if r < head])
+    right = sorted([r for r in requests if r > head])
+
+    for r in right:
+        total_seek += abs(r - head)
+        head = r
+        sequence.append(r)
+
+    if head != disk_size -1:
+        total_seek += abs((disk_size - 1) - head)
+        head = disk_size-1
+        sequence.append(head)
+
+    total_seek += disk_size-1
+    head = 0
+    sequence.append(head)
+
+    for r in left:
+        total_seek += abs(r - head)
+        head = r
+        sequence.append(r)
+
+    print("CSCAN : ","->".join(map(str,sequence)))
+    print("Total Seek time :",total_seek)
+
+
+cscan(requests,head, disk_size)
+
+
+def look(requests , head):
+    total_seek = 0
+    sequence=[head]
+
+    left = sorted([r for r in requests if r < head])
+    right = sorted([ r for r in requests if r> head])
+
+    for r in right:
+        total_seek += abs(r - head)
+        head = r
+        sequence.append(r)
+
+    for r in reversed(left):
+        total_seek += abs(r-head)
+        head = r
+        sequence.append(r)
+
+    print("LOOK :","->".join(map(str , sequence)))
+    print("Total seek time :",total_seek)
+
+look(requests,head)
+
+
+
+def clook(requests , head):
+    total_seek = 0
+    sequence = [head]
+
+    left = sorted([r for r in requests if r < head])
+    right = sorted([ r for r in requests if r > head])
+
+    for r in right:
+        total_seek += abs(r - head)
+        head = r
+        sequence.append(r)
+
+    if left:
+        total_seek += abs(head - left[0])
+        head = left[0]
+        sequence.append(head)
+
+    for r in left[1:]:
+        total_seek += abs(r- head)
+        head = r
+        sequence.append(r)
+
+    print("CLOOK :","->".join(map(str , sequence)))
+    print("Toatal Seek time:",total_seek)
+
+clook(requests,head)

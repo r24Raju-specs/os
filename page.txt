@@ -1,0 +1,74 @@
+pages= [1,2,3,4,1,2,5,1]
+capacity =3
+
+def lru(pages, capacity):
+    memory = []
+    page_fault = 0
+
+    print("lru")
+    for page in pages:
+        if page not in memory:
+            page_fault+=1
+
+            if len(memory) == capacity:
+                memory.pop(0)
+
+            memory.append(page)
+
+
+        else:
+            memory.remove(page)
+            memory.append(page)
+
+        print("memory:",memory)
+
+    print("Total Page Fault:",page_fault)
+
+lru(pages,capacity)
+
+
+def fifo(pages,capacity):
+    memory=[]
+    page_fault=0
+
+    print("fifo")
+    for page in pages:
+        if page not in memory:
+            page_fault+=1
+
+            if len(memory) == capacity:
+                memory.pop(0)
+
+            memory.append(page)
+
+        print("memory:",memory)
+
+    print("Total Page Fault:",page_fault)
+
+fifo(pages,capacity)
+
+
+
+def mru(pages,capacity):
+    memory=[]
+    page_fault = 0
+
+    print("mru")
+    for page in pages:
+        if page not in memory:
+            page_fault+=1
+
+            if len(memory)==capacity:
+                memory.pop()
+
+            memory.append(page)
+
+        else:
+            memory.remove(page)
+            memory.append(page)
+
+        print("memory:",memory)
+
+    print("Total Page Fault:",page_fault)
+
+mru(pages,capacity)
